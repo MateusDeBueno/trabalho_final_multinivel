@@ -68,6 +68,8 @@ matrix_uniq = unique(matrix_vector, 'rows');
 dados = num2cell(matrix_uniq,1);
 
 n_vet_unic = 3*N*(N-1)+1; %numero de vetores unicos, eh o mesmo comprimendo da matrix
+%%
+
 
 for z = 1:n_vetores
     alpha_talvez_unico = vetor_alpha(z);
