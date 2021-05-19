@@ -117,7 +117,7 @@ grid on
 
 
 f_rede = 50; %freq da rede
-m = 3.47; %indice de modulacao
+m = 3.44; %indice de modulacao
 n_pontos = 1000;
 time = linspace(0,1/f_rede,n_pontos); %vetor de tempo
 
@@ -184,6 +184,14 @@ for k=1:length(time)
         delta_uu(k)=1-delta_ul(k)-delta_lu(k);
     end
 end
+
+V1 = [V1_g; V1_h];
+V2 = [V2_g; V2_h];
+V3 = [V3_g; V3_h];
+
+
+scatter(V1)
+
 
 % figure
 % plot(VA)
