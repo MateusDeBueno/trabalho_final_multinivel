@@ -185,12 +185,14 @@ for k=1:length(time)
     end
 end
 
-V1 = [V1_g; V1_h];
-V2 = [V2_g; V2_h];
-V3 = [V3_g; V3_h];
 
-
-scatter(V1)
+% DELETAR
+% V1 = [V1_g; V1_h];
+% V2 = [V2_g; V2_h];
+% V3 = [V3_g; V3_h];
+% 
+% 
+% scatter(V1)
 
 
 % figure
