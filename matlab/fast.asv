@@ -4,9 +4,13 @@ clc
 
 N = 7; %numero de niveis
 Vdc = 1;
-V = (0:1:N-1)*Vdc - floor(N/2); % opcoes de tensoes de fase
+V = (0:1:N-1)*Vdc;  % opcoes de tensoes de fase
+%- floor(N/2);
 
-%cria as tens es de fase
+%cria as tensoes de fase
+Va = zeros(1,N);
+Vb = zeros(1,N);
+Vc = zeros(1,N);
 for j = 1:N
     Va(j) = V(j);
     Vb(j) = V(j);
@@ -117,9 +121,10 @@ grid on
 
 
 f_rede = 50; %freq da rede
-m = 0.5; %indice de modulacao
-n_pontos = 1000;
+m = 3; %indice de modulacao ??????????????????
+n_pontos = 100;
 time = linspace(0,1/f_rede,n_pontos); %vetor de tempo
+
 
 %criando diversos vetores para preencher
 VA = zeros(1,n_pontos);
@@ -141,18 +146,18 @@ V2_g = zeros(1,n_pontos);
 V2_h = zeros(1,n_pontos);
 V3_g = zeros(1,n_pontos);
 V3_h = zeros(1,n_pontos);
-
-
-% escolhe_ponto = zeros(1,n_pontos);
 delta_ul = zeros(1,n_pontos);
 delta_lu = zeros(1,n_pontos);
 delta_ll = zeros(1,n_pontos);
 delta_uu = zeros(1,n_pontos);
+delta_V1 = zeros(1,n_pontos);
+delta_V2 = zeros(1,n_pontos);
+delta_V3 = zeros(1,n_pontos);
 
 for k=1:length(time)
-    VA(k) = 3*sin(time(k)*2*pi*f_rede);
-    VB(k) = 3*sin(time(k)*2*pi*f_rede-2*pi*f_rede/3);
-    VC(k) = 3*sin(time(k)*2*pi*f_rede-4*pi*f_rede/3);
+    VA(k) = m*sin(time(k)*2*pi*f_rede);
+    VB(k) = m*sin(time(k)*2*pi*f_rede-2*pi*f_rede/3);
+    VC(k) = m*sin(time(k)*2*pi*f_rede-4*pi*f_rede/3);
     
     [g_ref(k), h_ref(k)]= transformada_fast(VA(k), VB(k), VC(k));
     
@@ -166,8 +171,7 @@ for k=1:length(time)
     Vuu_h(k) = ceil(h_ref(k));
 
     
-    %ïdentificar quais os 3 pontos usar, P1 e P2 sao sempre usados
-    %pore, eh utilizado ou P3 ou P4
+    %REESCREVER
     V1_g(k) = Vul_g(k);
     V1_h(k) = Vul_h(k);
     V2_g(k) = Vlu_g(k);
@@ -175,17 +179,33 @@ for k=1:length(time)
     if ((g_ref(k)+h_ref(k))-(Vul_g(k)+Vul_h(k)))>0 %escolhe Vuu
         V3_g(k) = Vuu_g(k);
         V3_h(k) = Vuu_h(k);
-        delta_ul(k)=g_ref(k)-Vll_g(k);
-        delta_lu(k)=h_ref(k)-Vll_h(k);
-        delta_ll(k)=1-delta_ul(k)-delta_lu(k);  
-    else                                         %escolhe Vll
-        V3_g(k) = Vll_g(k);
-        V3_h(k) = Vll_h(k);
         delta_ul(k)=-(h_ref(k)-Vuu_h(k));
         delta_lu(k)=-(g_ref(k)-Vuu_g(k));
         delta_uu(k)=1-delta_ul(k)-delta_lu(k);
+        delta_V1(k) = delta_ul(k);
+        delta_V2(k) = delta_lu(k);
+        delta_V3(k) = delta_uu(k);
+    else                                           %escolhe Vll
+        V3_g(k) = Vll_g(k);
+        V3_h(k) = Vll_h(k);
+        delta_ul(k)=g_ref(k)-Vll_g(k);
+        delta_lu(k)=h_ref(k)-Vll_h(k);
+        delta_ll(k)=1-delta_ul(k)-delta_lu(k); 
+        delta_V1(k) = delta_ul(k);
+        delta_V2(k) = delta_lu(k);
+        delta_V3(k) = delta_ll(k);
     end
 end
+
+
+% DELETAR
+V1 = [V1_g; V1_h];
+V2 = [V2_g; V2_h];
+V3 = [V3_g; V3_h];
+
+
+% scatter(V1')
+
 
 % figure
 % plot(VA)
@@ -197,13 +217,17 @@ end
 % legend('Va', 'Vb', 'Vc')
 % title('Tensoes de linha')
 
-figure
-plot(g_ref)
-hold on
-plot(h_ref)
-hold off
-xlim([0 n_pontos])
-legend('g', 'h')
+
+
+% figure
+% plot(g_ref)
+% hold on
+% plot(h_ref)
+% hold off
+% xlim([0 n_pontos])
+% legend('g', 'h')
+
+
 
 % figure
 % plot(V1_g)
@@ -218,21 +242,78 @@ legend('g', 'h')
 % legend('P1_g', 'P1_h', 'P2_g', 'P2_h', 'P3_g', 'P3_h')
 
 
+
 figure
 scatter(dados{1},dados{2})
 hold on
-plot(g_ref,h_ref)
+scatter(g_ref,h_ref)
 hold off
 grid on
 
 
+% teste = 50;
+% figure
+% scatter(dados{1},dados{2})
+% hold on
+% scatter(V1_g(teste), V1_h(teste),[], [delta_V1(teste) 0 0],'filled')
+% scatter(V2_g(teste), V2_h(teste),[], [delta_V2(teste) 0 0],'filled')
+% scatter(V3_g(teste), V3_h(teste),[], [delta_V3(teste) 0 0],'filled')
+% scatter(g_ref(teste),h_ref(teste),'filled','blue')
+% precisao_color = 100;
+% matrix_color = [zeros(1,precisao_color)' zeros(1,precisao_color)' zeros(1,precisao_color)'];
+% for k=1:precisao_color
+%     matrix_color(k,1)=k/abs(precisao_color);
+%     k=k+1;
+% end
+% colormap(matrix_color)
+% caxis([0 1])
+% colorbar;
+% hold off
 
-figure
-scatter(V1_g, V1_h)
-hold on
-scatter(V2_g, V2_h)
-scatter(V3_g, V3_h)
-plot(g_ref,h_ref)
-hold off
-legend('V1', 'V2', 'V3', 'Vref')
+
+
+
+
+
+
+fig = figure;
+filename = 'vetores_usados.gif';
+segundos = 20; %quantos segundos pra um ciclo da animacao
+precisao_color = 100;
+matrix_color = [zeros(1,precisao_color)' zeros(1,precisao_color)' zeros(1,precisao_color)'];
+for k=1:precisao_color
+    matrix_color(k,1)=k/abs(precisao_color);
+    k=k+1;
+end
+for n = 1:n_pontos
+      scatter(V1_g(n), V1_h(n),[], [delta_V1(n) 0 0],'filled')
+      colorbar;
+      hold on
+      scatter(V2_g(n), V2_h(n),[], [delta_V2(n) 0 0],'filled')
+      scatter(V3_g(n), V3_h(n),[], [delta_V3(n) 0 0],'filled')
+      scatter(g_ref(n), h_ref(n),'filled','blue')
+      %quiver(0, 0, g_ref(n), h_ref(n))
+      plot(g_ref,h_ref)
+      scatter(dados{1},dados{2},'black')
+      hold off
+      xlabel('G');
+      ylabel('H');
+      xlim([-(N-1) N-1]);
+      ylim([-(N-1) N-1]);
+      colormap(matrix_color)
+      caxis([0 1])
+      %drawnow
+      frame = getframe(fig);
+      im = frame2im(frame);
+      [imind,cm] = rgb2ind(im,256);
+      if n == 1
+          imwrite(imind,cm,filename,'gif', 'Loopcount',inf,'DelayTime',segundos/n_pontos);
+      else
+          imwrite(imind,cm,filename,'gif','WriteMode','append', 'DelayTime',segundos/n_pontos);
+      end
+end
+
+
+
+
 
