@@ -72,16 +72,47 @@ for z = 1:n_vetores
 end
 
 
-figure
-scatter3(dados{4},dados{5},dados{6})
-stg = blanks(1);
-for z = 1:n_vet_unic
-    numero_redundancias = int2str(dados{3}(z,1));
-    text(dados{4}(z),dados{5}(z), dados{6}(z), numero_redundancias,'FontSize',11)
+% figure
+% scatter3(dados{4},dados{5},dados{6})
+% stg = blanks(1);
+% for z = 1:n_vet_unic
+%     numero_redundancias = int2str(dados{3}(z,1));
+%     text(dados{4}(z),dados{5}(z), dados{6}(z), numero_redundancias,'FontSize',11)
+% end
+% xlabel('Vab')
+% ylabel('Vbc')
+% zlabel('Vca')
+% % view(65,25)
+
+
+
+%cria o gif
+fig = figure;
+filename = 'tensoes_linha.gif';
+frames_linha = 180; %quantos frames neste gif
+for n = 1:frames_linha
+      scatter3(dados{4},dados{5},dados{6})
+%       stg = blanks(1);
+%       for z = 1:n_vet_unic
+%           numero_redundancias = int2str(dados{3}(z,1));
+%           text(dados{4}(z),dados{5}(z), dados{6}(z), numero_redundancias,'FontSize',11)
+%       end
+      xlabel('Vab')
+      ylabel('Vbc')
+      zlabel('Vca')
+      view(n,25)
+      %drawnow
+      frame = getframe(fig);
+      im = frame2im(frame);
+      [imind,cm] = rgb2ind(im,256);
+      if n == 1
+          imwrite(imind,cm,filename,'gif', 'Loopcount',inf,'DelayTime',10/frames_linha);
+      else
+          imwrite(imind,cm,filename,'gif','WriteMode','append', 'DelayTime',10/frames_linha);
+      end
 end
-xlabel('Vab')
-ylabel('Vbc')
-zlabel('Vca')
+
+
 
 
 
