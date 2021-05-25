@@ -43,11 +43,11 @@ n = Nbig^3*Nsmall^3;
 vetor_alpha = zeros(1,n,1); %cria vetor para alphas
 vetor_beta = zeros(1,n,1); %cria vetor para betas
 vetor_gama = zeros(1,n,1); %cria vetor para betas
-vetor = string(1:n); %vetor de string para salvar as tensoes de linha que levam a cada vetor
 Va = zeros(1,n,1); %cria vetor para Va
 Vb = zeros(1,n,1); %cria vetor para Va
 Vc = zeros(1,n,1); %cria vetor para Va
 conjunto = zeros(1,n,1); %cria vetor para Va
+vetor_vabc = string(1:n); %vetor de string para salvar as tensoes de linha que geram a cada vetor
 
 for a = 1:Nbig %varre a tensao Va_big
     for b = 1:Nbig %varre a tensao Vb_big
@@ -62,6 +62,12 @@ for a = 1:Nbig %varre a tensao Va_big
                         Vc(n_vetores) = Vc_big(c) + Vc_small(f);
                         conjunto(n_vetores) = n_vetores_big;
                         [vetor_alpha(n_vetores), vetor_beta(n_vetores), vetor_gama(n_vetores)] = transformada_clarke(Va(n_vetores), Vb(n_vetores), Vc(n_vetores));
+                        
+                        %salvar qual posicao
+                        char_Va = int2str(Va(n_vetores));
+                        char_Vb = int2str(Vb(n_vetores));
+                        char_Vc = int2str(Vc(n_vetores));
+                        vetor_vabc(n_vetores) = append(char_Va, char_Vb, char_Vc); %salvando qual conjuento de tensoes de fase gera qual vetor
                     end
                 end
             end
@@ -102,6 +108,8 @@ for z = 1:n_vetores
     end
 end
 
+dados{6} = vetor_vabc';
+
 % %conta o numero de estados da celula grande para cada ponto
 % for z = 1:n_vetores
 %     alpha_talvez_unico = vetor_alpha(z);
@@ -125,25 +133,27 @@ end
 grid on
 xlabel('Alpha')
 ylabel('Beta')
-% 
+
+
 figure
 scatter3(dados{1},dados{2},dados{5})
 
-
-
-figure
-scatter(dados{1},dados{2},(dados{5}+1)*10)
-
 % figure
-% area(dados{1}, dados{2})
+% scatter(dados{1},dados{2},(dados{5}+1)*10)
 
 
-
-
+% %plot do numero de redundancias
 % figure
-% subplot(3,1,1);
-% plot(Va)
-% subplot(3,1,2); 
-% plot(Vb)
-% subplot(3,1,3); 
-% plot(Vc)
+% scatter(dados{1},dados{2},25,dados{3},'filled')
+% stg = blanks(1);
+% for z = 1:n_vet_unic
+%     for i=1:dados{3}(z,1)
+%         stg = append(stg, newline,dados{4}(z,i));
+%     end
+%     text(dados{1}(z),dados{2}(z),stg,'FontSize',7)
+%     stg = erase(stg,stg);
+% end
+% grid on
+% xlabel('Alpha')
+% ylabel('Beta')
+% %save_figure("joint_phase" + N)

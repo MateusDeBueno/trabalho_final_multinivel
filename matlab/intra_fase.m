@@ -4,7 +4,7 @@ clc
 
 N = 7; %numero de niveis
 Vdc = 1;
-V = (0:1:N-1)*Vdc - 3; % opcoes de tensoes de fase
+V = (0:1:N-1)*Vdc; % opcoes de tensoes de fase
 
 %cria as tens es de fase
 for j = 1:N
@@ -87,7 +87,17 @@ zlabel('Gama')
 
 
 
-
+figure
+gscatter(dados{1},dados{2},dados{3})
+stg = blanks(1);
+for z = 1:n_vet_unic
+    numero_redundancias = int2str(dados{3}(z,1));
+    text(dados{1}(z),dados{2}(z),numero_redundancias,'FontSize',11)
+end
+grid on
+xlabel('Alpha')
+ylabel('Beta')
+title('Numero de redundancias para cada posição no mapa Alpha Beta')
 
 
 
