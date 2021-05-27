@@ -4,7 +4,7 @@ clc
 
 N = 7; %numero de niveis
 Vdc = 1;
-V = (0:1:N-1)*Vdc; % opcoes de tensoes de fase
+V = (0:1:N-1)*Vdc - floor(N/2); % opcoes de tensoes de fase
 
 %cria as tens es de fase
 for j = 1:N
@@ -68,16 +68,16 @@ end
 grid on
 xlabel('Alpha')
 ylabel('Beta')
-%save_figure("joint_phase" + N)
+save_figure("joint_phase")
 
 
 figure
 plot3(vetor_alpha, vetor_beta, vetor_gama, 'o')
-hold on
-[X,Y] = meshgrid(-4:0.5:4,-4:0.5:4);
-Z = X*0+3;
-surf(X,Y,Z)
-hold off
+% hold on
+% [X,Y] = meshgrid(-4:0.5:4,-4:0.5:4);
+% Z = X*0+3;
+% surf(X,Y,Z)
+% hold off
 xlabel('Alpha')
 ylabel('Beta')
 zlabel('Gama')
@@ -98,7 +98,6 @@ grid on
 xlabel('Alpha')
 ylabel('Beta')
 title('Numero de redundancias para cada posição no mapa Alpha Beta')
-
 
 
 

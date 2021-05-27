@@ -4,7 +4,7 @@ clc
 
 N = 7; %numero de niveis
 Vdc = 1;
-V = (0:1:N-1)*Vdc;  % opcoes de tensoes de fase
+V = (0:1:N-1)*Vdc - floor(N/2);  % opcoes de tensoes de fase
 %- floor(N/2);
 
 %cria as tensoes de fase
@@ -145,14 +145,14 @@ for z = 1:n_vet_unic
     stg = erase(stg,stg);
 end
 grid on
-
+save_figure('aqui')
 
 
 %% VALIDACAO NO TEMPO
 
 
 f_rede = 50; %freq da rede
-m = 3; %indice de modulacao ??????????????????
+m = 3.4; %indice de modulacao ??????????????????
 n_pontos = 100;
 time = linspace(0,1/f_rede,n_pontos); %vetor de tempo
 
@@ -309,7 +309,7 @@ V3 = [V3_g; V3_h];
 
 %cria o gif
 fig = figure;
-filename = 'vetores_usados.gif';
+filename = 'vetores_usados3.gif';
 segundos = 20; %quantos segundos pra um ciclo da animacao
 precisao_color = 100;
 matrix_color = [zeros(1,precisao_color)' zeros(1,precisao_color)' zeros(1,precisao_color)'];

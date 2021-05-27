@@ -343,39 +343,39 @@ for k=1:length(time)
     end
 
     
-    %opcoes de tensoes pra cada fase
-    %cont_1 = 0;
-    %cont_2 = 0;
-    %cont_3 = 0;
-    for p=1:nivel %zero ate o nuumero de niveis
-        pretenso_Va_1 = p-1;
-        pretenso_Vb_1 = p-1-V1_g(k);
-        pretenso_Vc_1 = p-1-V1_g(k)-V1_h(k);
-        if (pretenso_Va_1>=0 && pretenso_Va_1<7 && pretenso_Vb_1>=0 && pretenso_Vb_1<7 && pretenso_Vc_1>=0 && pretenso_Vc_1<7)
-            cont_1(k) = cont_1(k)+1;
-            Va_1(k,cont_1(k))=pretenso_Va_1;
-            Vb_1(k,cont_1(k))=pretenso_Vb_1;
-            Vc_1(k,cont_1(k))=pretenso_Vc_1;
-        end
-        pretenso_Va_2 = p-1;
-        pretenso_Vb_2 = p-1-V2_g(k);
-        pretenso_Vc_2 = p-1-V2_g(k)-V2_h(k);  
-        if (pretenso_Va_2>=0 && pretenso_Va_2<7 && pretenso_Vb_2>=0 && pretenso_Vb_2<7 && pretenso_Vc_2>=0 && pretenso_Vc_2<7)
-            cont_2(k) = cont_2(k)+1;
-            Va_2(k,cont_2(k))=pretenso_Va_2;
-            Vb_2(k,cont_2(k))=pretenso_Vb_2;
-            Vc_2(k,cont_2(k))=pretenso_Vc_2;
-        end
-        pretenso_Va_3 = p-1;
-        pretenso_Vb_3 = p-1-V3_g(k);
-        pretenso_Vc_3 = p-1-V3_g(k)-V3_h(k);     
-        if (pretenso_Va_3>=0 && pretenso_Va_3<7 && pretenso_Vb_3>=0 && pretenso_Vb_3<7 && pretenso_Vc_3>=0 && pretenso_Vc_3<7)
-            cont_3(k) = cont_3(k)+1;
-            Va_3(k,cont_3(k))=pretenso_Va_3;
-            Vb_3(k,cont_3(k))=pretenso_Vb_3;
-            Vc_3(k,cont_3(k))=pretenso_Vc_3;
-        end
+%opcoes de tensoes pra cada fase
+%cont_1 = 0;
+%cont_2 = 0;
+%cont_3 = 0;
+for p=1:nivel %zero ate o nuumero de niveis
+    pretenso_Va_1 = p-1;
+    pretenso_Vb_1 = p-1-V1_g(k);
+    pretenso_Vc_1 = p-1-V1_g(k)-V1_h(k);
+    if (pretenso_Va_1>=0 && pretenso_Va_1<7 && pretenso_Vb_1>=0 && pretenso_Vb_1<7 && pretenso_Vc_1>=0 && pretenso_Vc_1<7)
+        cont_1(k) = cont_1(k)+1;
+        Va_1(k,cont_1(k))=pretenso_Va_1;
+        Vb_1(k,cont_1(k))=pretenso_Vb_1;
+        Vc_1(k,cont_1(k))=pretenso_Vc_1;
     end
+    pretenso_Va_2 = p-1;
+    pretenso_Vb_2 = p-1-V2_g(k);
+    pretenso_Vc_2 = p-1-V2_g(k)-V2_h(k);  
+    if (pretenso_Va_2>=0 && pretenso_Va_2<7 && pretenso_Vb_2>=0 && pretenso_Vb_2<7 && pretenso_Vc_2>=0 && pretenso_Vc_2<7)
+        cont_2(k) = cont_2(k)+1;
+        Va_2(k,cont_2(k))=pretenso_Va_2;
+        Vb_2(k,cont_2(k))=pretenso_Vb_2;
+        Vc_2(k,cont_2(k))=pretenso_Vc_2;
+    end
+    pretenso_Va_3 = p-1;
+    pretenso_Vb_3 = p-1-V3_g(k);
+    pretenso_Vc_3 = p-1-V3_g(k)-V3_h(k);     
+    if (pretenso_Va_3>=0 && pretenso_Va_3<7 && pretenso_Vb_3>=0 && pretenso_Vb_3<7 && pretenso_Vc_3>=0 && pretenso_Vc_3<7)
+        cont_3(k) = cont_3(k)+1;
+        Va_3(k,cont_3(k))=pretenso_Va_3;
+        Vb_3(k,cont_3(k))=pretenso_Vb_3;
+        Vc_3(k,cont_3(k))=pretenso_Vc_3;
+    end
+end
 end
 
 
@@ -542,90 +542,11 @@ end
 % save_figure("m_igual"+m)
 
 
-%%
-kg = 3.3153;
-kh = 3.3153;
-% kg = 3.7453;
-% kh = 3.7453;
-figure
-hold on
-%PRIMEIRO QUADRANTE
-[Vul_g,Vul_h,Vlu_g,Vlu_h,Vll_g,Vll_h,Vuu_g,Vuu_h,V1_g,V1_h,V2_g,V2_h,V3_g,V3_h,delta_V1,delta_V2,delta_V3] = aproximacoes_fast(kg,kh);
-scatter(kg,kh,'filled','green')
-scatter(Vul_g,Vul_h,'filled','blue')
-text(Vul_g,Vul_h,"Vul",'FontSize',9)
-scatter(Vlu_g,Vlu_h,'filled','blue')
-text(Vlu_g,Vlu_h,"Vlu",'FontSize',9)
-scatter(Vll_g,Vll_h,'filled','blue')
-text(Vll_g,Vll_h,"Vll",'FontSize',9)
-scatter(Vuu_g,Vuu_h,'filled','blue')
-text(Vuu_g,Vuu_h,"Vuu",'FontSize',9)
-text((Vll_g + Vul_g)/2,Vll_h-1,"1quad",'FontSize',9)
-scatter(V1_g,V1_h, 10,'filled','red')
-scatter(V2_g,V2_h, 10,'filled','red')
-scatter(V3_g,V3_h, 10,'filled','red')
-text(V1_g,V1_h-0.2,num2str(delta_V1),'FontSize',9)
-text(V2_g,V2_h-0.2,num2str(delta_V2),'FontSize',9)
-text(V3_g,V3_h-0.2,num2str(delta_V3),'FontSize',9)
 
-%SEGUNDO QUADRANTE
-[Vul_g,Vul_h,Vlu_g,Vlu_h,Vll_g,Vll_h,Vuu_g,Vuu_h,V1_g,V1_h,V2_g,V2_h,V3_g,V3_h,delta_V1,delta_V2,delta_V3] = aproximacoes_fast(-kg,kh);
-scatter(-kg,kh,'filled','green')
-scatter(Vul_g,Vul_h,'filled','blue')
-text(Vul_g,Vul_h,"Vul",'FontSize',9)
-scatter(Vlu_g,Vlu_h,'filled','blue')
-text(Vlu_g,Vlu_h,"Vlu",'FontSize',9)
-scatter(Vll_g,Vll_h,'filled','blue')
-text(Vll_g,Vll_h,"Vll",'FontSize',9)
-scatter(Vuu_g,Vuu_h,'filled','blue')
-text(Vuu_g,Vuu_h,"Vuu",'FontSize',9)
-text((Vul_g + Vll_g)/2,Vll_h-1,"2quad",'FontSize',9)
-scatter(V1_g,V1_h, 10,'filled','red')
-scatter(V2_g,V2_h, 10,'filled','red')
-scatter(V3_g,V3_h, 10,'filled','red')
-text(V1_g,V1_h-0.2,num2str(delta_V1),'FontSize',9)
-text(V2_g,V2_h-0.2,num2str(delta_V2),'FontSize',9)
-text(V3_g,V3_h-0.2,num2str(delta_V3),'FontSize',9)
 
-%TERCEIRO QUADRANTE
-[Vul_g,Vul_h,Vlu_g,Vlu_h,Vll_g,Vll_h,Vuu_g,Vuu_h,V1_g,V1_h,V2_g,V2_h,V3_g,V3_h,delta_V1,delta_V2,delta_V3] = aproximacoes_fast(-kg,-kh);
-scatter(-kg,-kh,'filled','green')
-scatter(Vul_g,Vul_h,'filled','blue')
-text(Vul_g,Vul_h,"Vul",'FontSize',9)
-scatter(Vlu_g,Vlu_h,'filled','blue')
-text(Vlu_g,Vlu_h,"Vlu",'FontSize',9)
-scatter(Vll_g,Vll_h,'filled','blue')
-text(Vll_g,Vll_h,"Vll",'FontSize',9)
-scatter(Vuu_g,Vuu_h,'filled','blue')
-text(Vuu_g,Vuu_h,"Vuu",'FontSize',9)
-text((Vul_g + Vll_g)/2,Vll_h+1,"3quad",'FontSize',9)
-scatter(V1_g,V1_h, 10,'filled','red')
-scatter(V2_g,V2_h, 10,'filled','red')
-scatter(V3_g,V3_h, 10,'filled','red')
-text(V1_g,V1_h-0.2,num2str(delta_V1),'FontSize',9)
-text(V2_g,V2_h-0.2,num2str(delta_V2),'FontSize',9)
-text(V3_g,V3_h-0.2,num2str(delta_V3),'FontSize',9)
+[Vul_g,Vul_h,Vlu_g,Vlu_h,Vll_g,Vll_h,Vuu_g,Vuu_h] = aproximacoes_fast(1.7,-1.7);
 
-%QUARTO QUADRANTE
-[Vul_g,Vul_h,Vlu_g,Vlu_h,Vll_g,Vll_h,Vuu_g,Vuu_h,V1_g,V1_h,V2_g,V2_h,V3_g,V3_h,delta_V1,delta_V2,delta_V3] = aproximacoes_fast(kg,-kh);
-scatter(kg,-kh,'filled','green')
-scatter(Vul_g,Vul_h,'filled','blue')
-text(Vul_g,Vul_h,"Vul",'FontSize',9)
-scatter(Vlu_g,Vlu_h,'filled','blue')
-text(Vlu_g,Vlu_h,"Vlu",'FontSize',9)
-scatter(Vll_g,Vll_h,'filled','blue')
-text(Vll_g,Vll_h,"Vll",'FontSize',9)
-scatter(Vuu_g,Vuu_h,'filled','blue')
-text(Vuu_g,Vuu_h,"Vuu",'FontSize',9)
-text((Vul_g + Vll_g)/2,Vll_h+1,"4quad",'FontSize',9)
-scatter(V1_g,V1_h, 10,'filled','red')
-scatter(V2_g,V2_h, 10,'filled','red')
-scatter(V3_g,V3_h, 10,'filled','red')
-text(V1_g,V1_h-0.2,num2str(delta_V1),'FontSize',9)
-text(V2_g,V2_h-0.2,num2str(delta_V2),'FontSize',9)
-text(V3_g,V3_h-0.2,num2str(delta_V3),'FontSize',9)
-hold off
-grid;
+
 
 
 
