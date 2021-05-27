@@ -2,7 +2,7 @@ clear all
 close all
 clc
 
-N = 7; %numero de niveis
+N = 5; %numero de niveis
 Vdc = 1;
 V = (0:1:N-1)*Vdc - floor(N/2); % opcoes de tensoes de fase
 

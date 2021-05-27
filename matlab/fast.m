@@ -192,40 +192,42 @@ for k=1:length(time)
     
     [g_ref(k), h_ref(k)]= transformada_fast(VA(k), VB(k), VC(k));
     
-    Vul_g(k) = ceil(g_ref(k));
-    Vul_h(k) = floor(h_ref(k));
-    Vlu_g(k) = floor(g_ref(k));
-    Vlu_h(k) = ceil(h_ref(k));
-    Vll_g(k) = floor(g_ref(k));
-    Vll_h(k) = floor(h_ref(k));
-    Vuu_g(k) = ceil(g_ref(k));
-    Vuu_h(k) = ceil(h_ref(k));
+%     Vul_g(k) = ceil(g_ref(k));
+%     Vul_h(k) = floor(h_ref(k));
+%     Vlu_g(k) = floor(g_ref(k));
+%     Vlu_h(k) = ceil(h_ref(k));
+%     Vll_g(k) = floor(g_ref(k));
+%     Vll_h(k) = floor(h_ref(k));
+%     Vuu_g(k) = ceil(g_ref(k));
+%     Vuu_h(k) = ceil(h_ref(k));
+% 
+%     
+%     %REESCREVER
+%     V1_g(k) = Vul_g(k);
+%     V1_h(k) = Vul_h(k);
+%     V2_g(k) = Vlu_g(k);
+%     V2_h(k) = Vlu_h(k);    
+%     if ((g_ref(k)+h_ref(k))-(Vul_g(k)+Vul_h(k)))>0 %escolhe Vuu
+%         V3_g(k) = Vuu_g(k);
+%         V3_h(k) = Vuu_h(k);
+%         delta_ul(k)=-(h_ref(k)-Vuu_h(k));
+%         delta_lu(k)=-(g_ref(k)-Vuu_g(k));
+%         delta_uu(k)=1-delta_ul(k)-delta_lu(k);
+%         delta_V1(k) = delta_ul(k);
+%         delta_V2(k) = delta_lu(k);
+%         delta_V3(k) = delta_uu(k);
+%     else                                           %escolhe Vll
+%         V3_g(k) = Vll_g(k);
+%         V3_h(k) = Vll_h(k);
+%         delta_ul(k)=g_ref(k)-Vll_g(k);
+%         delta_lu(k)=h_ref(k)-Vll_h(k);
+%         delta_ll(k)=1-delta_ul(k)-delta_lu(k); 
+%         delta_V1(k) = delta_ul(k);
+%         delta_V2(k) = delta_lu(k);
+%         delta_V3(k) = delta_ll(k);
+%     end
+    [Vul_g(k),Vul_h(k),Vlu_g(k),Vlu_h(k),Vll_g(k),Vll_h(k),Vuu_g(k),Vuu_h(k),V1_g(k),V1_h(k),V2_g(k),V2_h(k),V3_g(k),V3_h(k),delta_V1(k),delta_V2(k),delta_V3(k)] = aproximacoes_fast(g_ref(k),h_ref(k),N);
 
-    
-    %REESCREVER
-    V1_g(k) = Vul_g(k);
-    V1_h(k) = Vul_h(k);
-    V2_g(k) = Vlu_g(k);
-    V2_h(k) = Vlu_h(k);    
-    if ((g_ref(k)+h_ref(k))-(Vul_g(k)+Vul_h(k)))>0 %escolhe Vuu
-        V3_g(k) = Vuu_g(k);
-        V3_h(k) = Vuu_h(k);
-        delta_ul(k)=-(h_ref(k)-Vuu_h(k));
-        delta_lu(k)=-(g_ref(k)-Vuu_g(k));
-        delta_uu(k)=1-delta_ul(k)-delta_lu(k);
-        delta_V1(k) = delta_ul(k);
-        delta_V2(k) = delta_lu(k);
-        delta_V3(k) = delta_uu(k);
-    else                                           %escolhe Vll
-        V3_g(k) = Vll_g(k);
-        V3_h(k) = Vll_h(k);
-        delta_ul(k)=g_ref(k)-Vll_g(k);
-        delta_lu(k)=h_ref(k)-Vll_h(k);
-        delta_ll(k)=1-delta_ul(k)-delta_lu(k); 
-        delta_V1(k) = delta_ul(k);
-        delta_V2(k) = delta_lu(k);
-        delta_V3(k) = delta_ll(k);
-    end
 end
 
 

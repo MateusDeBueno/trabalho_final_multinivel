@@ -197,7 +197,7 @@ for z = 1:n_vet_unic
     for i=1:dados{4}(z,1)
         stg = append(stg, newline,dados{6}(z,i));
     end
-    text(dados{1}(z),dados{2}(z),stg,'FontSize',5)
+    text(dados{1}(z),dados{2}(z),stg,'FontSize',7)
     stg = erase(stg,stg);
 end
 grid on
@@ -281,74 +281,8 @@ for k=1:length(time)
     
     [g_ref(k), h_ref(k)]= transformada_fast(VA(k), VB(k), VC(k));
     
-    
-    
-    %aproximacoes
-    if (g_ref(k)>=0 && h_ref(k)>=0)%G e H positivos, PRIMEIRO quadrante
-        Vul_g(k) = ceil(g_ref(k));
-        Vul_h(k) = floor(h_ref(k));
-        Vlu_g(k) = floor(g_ref(k));
-        Vlu_h(k) = ceil(h_ref(k));
-        Vll_g(k) = floor(g_ref(k));
-        Vll_h(k) = floor(h_ref(k));
-        Vuu_g(k) = ceil(g_ref(k));
-        Vuu_h(k) = ceil(h_ref(k));
-    end
-    if (g_ref(k)<=0 && h_ref(k)>=0)%G negativo e H positivo, SEGUNDO quadrante
-        Vul_g(k) = floor(g_ref(k));
-        Vul_h(k) = floor(h_ref(k));
-        Vlu_g(k) = ceil(g_ref(k));
-        Vlu_h(k) = ceil(h_ref(k));
-        Vll_g(k) = ceil(g_ref(k));
-        Vll_h(k) = floor(h_ref(k));
-        Vuu_g(k) = floor(g_ref(k));
-        Vuu_h(k) = ceil(h_ref(k));
-    end
-    if (g_ref(k)<=0 && h_ref(k)<=0)%G e H negativos, TERCEIRO quadrante
-        Vul_g(k) = floor(g_ref(k));
-        Vul_h(k) = ceil(h_ref(k));
-        Vlu_g(k) = ceil(g_ref(k));
-        Vlu_h(k) = floor(h_ref(k));
-        Vll_g(k) = ceil(g_ref(k));
-        Vll_h(k) = ceil(h_ref(k));
-        Vuu_g(k) = floor(g_ref(k));
-        Vuu_h(k) = floor(h_ref(k));
-    end
-    if (g_ref(k)>=0 && h_ref(k)<=0)%G positivo e H negativo, QUARTO quadrante
-        Vul_g(k) = ceil(g_ref(k));
-        Vul_h(k) = ceil(h_ref(k));
-        Vlu_g(k) = floor(g_ref(k));
-        Vlu_h(k) = floor(h_ref(k));
-        Vll_g(k) = floor(g_ref(k));
-        Vll_h(k) = ceil(h_ref(k));
-        Vuu_g(k) = ceil(g_ref(k));
-        Vuu_h(k) = floor(h_ref(k));
-    end
+    [Vul_g(k),Vul_h(k),Vlu_g(k),Vlu_h(k),Vll_g(k),Vll_h(k),Vuu_g(k),Vuu_h(k),V1_g(k),V1_h(k),V2_g(k),V2_h(k),V3_g(k),V3_h(k),delta_V1(k),delta_V2(k),delta_V3(k)] = aproximacoes_fast(g_ref(k),h_ref(k),nivel);
 
-    %REESCREVER
-    V1_g(k) = Vul_g(k);
-    V1_h(k) = Vul_h(k);
-    V2_g(k) = Vlu_g(k);
-    V2_h(k) = Vlu_h(k);    
-    if ((g_ref(k)+h_ref(k))-(Vul_g(k)+Vul_h(k)))>0 %escolhe Vuu
-        V3_g(k) = Vuu_g(k);
-        V3_h(k) = Vuu_h(k);
-        delta_V1(k) = -(h_ref(k)-Vuu_h(k));
-        delta_V2(k) = -(g_ref(k)-Vuu_g(k));
-        delta_V3(k) = 1-delta_V1(k)-delta_V2(k);
-    else                                           %escolhe Vll
-        V3_g(k) = Vll_g(k);
-        V3_h(k) = Vll_h(k);
-        delta_V1(k) = g_ref(k)-Vll_g(k);
-        delta_V2(k) = h_ref(k)-Vll_h(k);
-        delta_V3(k) = 1-delta_V1(k)-delta_V2(k); 
-    end
-
-    
-    %opcoes de tensoes pra cada fase
-    %cont_1 = 0;
-    %cont_2 = 0;
-    %cont_3 = 0;
     for p=1:nivel %zero ate o nuumero de niveis
         pretenso_Va_1 = p-1;
         pretenso_Vb_1 = p-1-V1_g(k);
@@ -508,39 +442,46 @@ scatter(V3_g(m2), V3_h(m2),'filled','blue')
 text(V3_g(m2),V3_h(m2),'V3','FontSize',9)
 hold off
 contador=0;
-text(-5,-3-contador,"Ref1 m="+m,'FontSize',9)
+text(-5.5,-3-contador,"Ref1 m="+m,'FontSize',9)
 for k=1:cont_1(m)
     contador=contador+0.5;
     junta = append(int2str(Va_1(m,k)-3),int2str(Vb_1(m,k)-3),int2str(Vc_1(m,k)-3));
-    text(-5,-3-contador,"V1: ("+junta+")",'FontSize',9)
+    text(-5.5,-3-contador,"V1: ("+junta+")",'FontSize',9)
 end
+text(-3.8,-3-contador,"D1="+round(delta_V1(m),2),'FontSize',9)
 for k=1:cont_2(m)
     contador=contador+0.5;
     junta = append(int2str(Va_2(m,k)-3),int2str(Vb_2(m,k)-3),int2str(Vc_2(m,k)-3));
-    text(-5,-3-contador,"V2: ("+junta+")",'FontSize',9)
+    text(-5.5,-3-contador,"V2: ("+junta+")",'FontSize',9)
 end
+text(-3.8,-3-contador,"D2="+round(delta_V2(m),2),'FontSize',9)
 for k=1:cont_3(m)
     contador=contador+0.5;
     junta = append(int2str(Va_3(m,k)-3),int2str(Vb_3(m,k)-3),int2str(Vc_3(m,k)-3));
-    text(-5,-3-contador,"V3: ("+junta+")",'FontSize',9)
+    text(-5.5,-3-contador,"V3: ("+junta+")",'FontSize',9)
 end
-contador2=0;
-text(4,5.5-contador2,"Ref2 m="+m2,'FontSize',9)
+text(-3.8,-3-contador,"D3="+round(delta_V3(m),2),'FontSize',9)
+
+contador2=-0.3;
+text(4.2,5.5-contador2,"Ref2 m="+m2,'FontSize',9)
 for k=1:cont_1(m2)
     contador2=contador2+0.5;
     junta = append(int2str(Va_1(m2,k)-3),int2str(Vb_1(m2,k)-3),int2str(Vc_1(m2,k)-3));
-    text(4,5.5-contador2,"V1: ("+junta+")",'FontSize',9)
+    text(4.2,5.5-contador2,"V1: ("+junta+")",'FontSize',9)
 end
+text(2.8,5.5-contador2,"D1="+round(delta_V1(m2),2),'FontSize',9)
 for k=1:cont_2(m2)
     contador2=contador2+0.5;
     junta = append(int2str(Va_2(m2,k)-3),int2str(Vb_2(m2,k)-3),int2str(Vc_2(m2,k)-3));
-    text(4,5.5-contador2,"V2: ("+junta+")",'FontSize',9)
+    text(4.2,5.5-contador2,"V2: ("+junta+")",'FontSize',9)
 end
+text(2.8,5.5-contador2,"D2="+round(delta_V2(m2),2),'FontSize',9)
 for k=1:cont_3(m2)
     contador2=contador2+0.5;
     junta = append(int2str(Va_3(m2,k)-3),int2str(Vb_3(m2,k)-3),int2str(Vc_3(m2,k)-3));
-    text(4,5.5-contador2,"V3: ("+junta+")",'FontSize',9)
+    text(4.2,5.5-contador2,"V3: ("+junta+")",'FontSize',9)
 end
+text(2.8,5.5-contador2,"D3="+round(delta_V3(m2),2),'FontSize',9)
 % save_figure("m_igual"+m)
 
 
