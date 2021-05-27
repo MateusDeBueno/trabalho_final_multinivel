@@ -281,6 +281,8 @@ for k=1:length(time)
     
     [g_ref(k), h_ref(k)]= transformada_fast(VA(k), VB(k), VC(k));
     
+    
+    
     %aproximacoes
     if (g_ref(k)>=0 && h_ref(k)>=0)%G e H positivos, PRIMEIRO quadrante
         Vul_g(k) = ceil(g_ref(k));
@@ -479,7 +481,7 @@ title('Opcoes de vetores para cada ponto de amostragem')
 
 %%
 
-initial_pont = 9;
+initial_pont = 3;
 m = initial_pont;
 m2 = initial_pont+n_pontos_t/2;
 %analisando ponto a ponto
@@ -543,91 +545,177 @@ end
 
 
 %%
-kg = 3.3153;
-kh = 3.3153;
+kg = 2.3;
+kh = 3.4041;
 % kg = 3.7453;
 % kh = 3.7453;
 figure
 hold on
 %PRIMEIRO QUADRANTE
-[Vul_g,Vul_h,Vlu_g,Vlu_h,Vll_g,Vll_h,Vuu_g,Vuu_h,V1_g,V1_h,V2_g,V2_h,V3_g,V3_h,delta_V1,delta_V2,delta_V3] = aproximacoes_fast(kg,kh);
+[Vul_g_pt,Vul_h_pt,Vlu_g_pt,Vlu_h_pt,Vll_g_pt,Vll_h_pt,Vuu_g_pt,Vuu_h_pt,V1_g_pt,V1_h_pt,V2_g_pt,V2_h_pt,V3_g_pt,V3_h_pt,delta_V1_pt,delta_V2_pt,delta_V3_pt,cont_1_pt,Va_1_pt,Vb_1_pt,Vc_1_pt,cont_2_pt,Va_2_pt,Vb_2_pt,Vc_2_pt,cont_3_pt,Va_3_pt,Vb_3_pt,Vc_3_pt] = aproximacoes_fast(kg,kh,nivel);
 scatter(kg,kh,'filled','green')
-scatter(Vul_g,Vul_h,'filled','blue')
-text(Vul_g,Vul_h,"Vul",'FontSize',9)
-scatter(Vlu_g,Vlu_h,'filled','blue')
-text(Vlu_g,Vlu_h,"Vlu",'FontSize',9)
-scatter(Vll_g,Vll_h,'filled','blue')
-text(Vll_g,Vll_h,"Vll",'FontSize',9)
-scatter(Vuu_g,Vuu_h,'filled','blue')
-text(Vuu_g,Vuu_h,"Vuu",'FontSize',9)
-text((Vll_g + Vul_g)/2,Vll_h-1,"1quad",'FontSize',9)
-scatter(V1_g,V1_h, 10,'filled','red')
-scatter(V2_g,V2_h, 10,'filled','red')
-scatter(V3_g,V3_h, 10,'filled','red')
-text(V1_g,V1_h-0.2,num2str(delta_V1),'FontSize',9)
-text(V2_g,V2_h-0.2,num2str(delta_V2),'FontSize',9)
-text(V3_g,V3_h-0.2,num2str(delta_V3),'FontSize',9)
+scatter(Vul_g_pt,Vul_h_pt,'filled','blue')
+text(Vul_g_pt,Vul_h_pt,"Vul",'FontSize',9)
+scatter(Vlu_g_pt,Vlu_h_pt,'filled','blue')
+text(Vlu_g_pt,Vlu_h_pt,"Vlu",'FontSize',9)
+scatter(Vll_g_pt,Vll_h_pt,'filled','blue')
+text(Vll_g_pt,Vll_h_pt,"Vll",'FontSize',9)
+scatter(Vuu_g_pt,Vuu_h_pt,'filled','blue')
+text(Vuu_g_pt,Vuu_h_pt,"Vuu",'FontSize',9)
+text((Vll_g_pt + Vul_g_pt)/2,Vll_h_pt-1,"1quad",'FontSize',9)
+scatter(V1_g_pt,V1_h_pt, 10,'filled','red')
+scatter(V2_g_pt,V2_h_pt, 10,'filled','red')
+scatter(V3_g_pt,V3_h_pt, 10,'filled','red')
+text(V1_g_pt,V1_h_pt-0.2,"D=" + num2str(delta_V1_pt),'FontSize',9)
+text(V2_g_pt,V2_h_pt-0.2,"D=" + num2str(delta_V2_pt),'FontSize',9)
+text(V3_g_pt,V3_h_pt-0.2,"D=" + num2str(delta_V3_pt),'FontSize',9)
+% text(V1_g_pt,V1_h_pt-0.4,num2str(cont_1_pt),'FontSize',9)
+% text(V2_g_pt,V2_h_pt-0.4,num2str(cont_2_pt),'FontSize',9)
+% text(V3_g_pt,V3_h_pt-0.4,num2str(cont_3_pt),'FontSize',9)
+contador_pt = -0.4;
+for k=1:cont_1_pt
+    contador_pt=contador_pt+0.2;
+    junta_pt = append(int2str(Va_1_pt(k)-3),int2str(Vb_1_pt(k)-3),int2str(Vc_1_pt(k)-3));
+    text(V1_g_pt,V1_h_pt-0.6-contador_pt,"V1: ("+junta_pt+")",'FontSize',9)
+end
+contador_pt = -0.4;
+for k=1:cont_2_pt
+    contador_pt=contador_pt+0.2;
+    junta_pt = append(int2str(Va_2_pt(k)-3),int2str(Vb_2_pt(k)-3),int2str(Vc_2_pt(k)-3));
+    text(V2_g_pt,V2_h_pt-0.6-contador_pt,"V2: ("+junta_pt+")",'FontSize',9)
+end
+contador_pt = -0.4;
+for k=1:cont_3_pt
+    contador_pt=contador_pt+0.2;
+    junta_pt = append(int2str(Va_3_pt(k)-3),int2str(Vb_3_pt(k)-3),int2str(Vc_3_pt(k)-3));
+    text(V3_g_pt,V3_h_pt-0.6-contador_pt,"V3: ("+junta_pt+")",'FontSize',9)
+end
+
 
 %SEGUNDO QUADRANTE
-[Vul_g,Vul_h,Vlu_g,Vlu_h,Vll_g,Vll_h,Vuu_g,Vuu_h,V1_g,V1_h,V2_g,V2_h,V3_g,V3_h,delta_V1,delta_V2,delta_V3] = aproximacoes_fast(-kg,kh);
+[Vul_g_pt,Vul_h_pt,Vlu_g_pt,Vlu_h_pt,Vll_g_pt,Vll_h_pt,Vuu_g_pt,Vuu_h_pt,V1_g_pt,V1_h_pt,V2_g_pt,V2_h_pt,V3_g_pt,V3_h_pt,delta_V1_pt,delta_V2_pt,delta_V3_pt,cont_1_pt,Va_1_pt,Vb_1_pt,Vc_1_pt,cont_2_pt,Va_2_pt,Vb_2_pt,Vc_2_pt,cont_3_pt,Va_3_pt,Vb_3_pt,Vc_3_pt] = aproximacoes_fast(-kg,kh,nivel);
 scatter(-kg,kh,'filled','green')
-scatter(Vul_g,Vul_h,'filled','blue')
-text(Vul_g,Vul_h,"Vul",'FontSize',9)
-scatter(Vlu_g,Vlu_h,'filled','blue')
-text(Vlu_g,Vlu_h,"Vlu",'FontSize',9)
-scatter(Vll_g,Vll_h,'filled','blue')
-text(Vll_g,Vll_h,"Vll",'FontSize',9)
-scatter(Vuu_g,Vuu_h,'filled','blue')
-text(Vuu_g,Vuu_h,"Vuu",'FontSize',9)
-text((Vul_g + Vll_g)/2,Vll_h-1,"2quad",'FontSize',9)
-scatter(V1_g,V1_h, 10,'filled','red')
-scatter(V2_g,V2_h, 10,'filled','red')
-scatter(V3_g,V3_h, 10,'filled','red')
-text(V1_g,V1_h-0.2,num2str(delta_V1),'FontSize',9)
-text(V2_g,V2_h-0.2,num2str(delta_V2),'FontSize',9)
-text(V3_g,V3_h-0.2,num2str(delta_V3),'FontSize',9)
+scatter(Vul_g_pt,Vul_h_pt,'filled','blue')
+text(Vul_g_pt,Vul_h_pt,"Vul",'FontSize',9)
+scatter(Vlu_g_pt,Vlu_h_pt,'filled','blue')
+text(Vlu_g_pt,Vlu_h_pt,"Vlu",'FontSize',9)
+scatter(Vll_g_pt,Vll_h_pt,'filled','blue')
+text(Vll_g_pt,Vll_h_pt,"Vll",'FontSize',9)
+scatter(Vuu_g_pt,Vuu_h_pt,'filled','blue')
+text(Vuu_g_pt,Vuu_h_pt,"Vuu",'FontSize',9)
+text((Vul_g_pt + Vll_g_pt)/2,Vll_h_pt-1,"2quad",'FontSize',9)
+scatter(V1_g_pt,V1_h_pt, 10,'filled','red')
+scatter(V2_g_pt,V2_h_pt, 10,'filled','red')
+scatter(V3_g_pt,V3_h_pt, 10,'filled','red')
+text(V1_g_pt,V1_h_pt-0.2,"D=" + num2str(delta_V1_pt),'FontSize',9)
+text(V2_g_pt,V2_h_pt-0.2,"D=" + num2str(delta_V2_pt),'FontSize',9)
+text(V3_g_pt,V3_h_pt-0.2,"D=" + num2str(delta_V3_pt),'FontSize',9)
+% text(V1_g_pt,V1_h_pt-0.4,num2str(cont_1_pt),'FontSize',9)
+% text(V2_g_pt,V2_h_pt-0.4,num2str(cont_2_pt),'FontSize',9)
+% text(V3_g_pt,V3_h_pt-0.4,num2str(cont_3_pt),'FontSize',9)
+contador_pt = -0.4;
+for k=1:cont_1_pt
+    contador_pt=contador_pt+0.2;
+    junta_pt = append(int2str(Va_1_pt(k)-3),int2str(Vb_1_pt(k)-3),int2str(Vc_1_pt(k)-3));
+    text(V1_g_pt,V1_h_pt-0.6-contador_pt,"V1: ("+junta_pt+")",'FontSize',9)
+end
+contador_pt = -0.4;
+for k=1:cont_2_pt
+    contador_pt=contador_pt+0.2;
+    junta_pt = append(int2str(Va_2_pt(k)-3),int2str(Vb_2_pt(k)-3),int2str(Vc_2_pt(k)-3));
+    text(V2_g_pt,V2_h_pt-0.6-contador_pt,"V2: ("+junta_pt+")",'FontSize',9)
+end
+contador_pt = -0.4;
+for k=1:cont_3_pt
+    contador_pt=contador_pt+0.2;
+    junta_pt = append(int2str(Va_3_pt(k)-3),int2str(Vb_3_pt(k)-3),int2str(Vc_3_pt(k)-3));
+    text(V3_g_pt,V3_h_pt-0.6-contador_pt,"V3: ("+junta_pt+")",'FontSize',9)
+end
 
 %TERCEIRO QUADRANTE
-[Vul_g,Vul_h,Vlu_g,Vlu_h,Vll_g,Vll_h,Vuu_g,Vuu_h,V1_g,V1_h,V2_g,V2_h,V3_g,V3_h,delta_V1,delta_V2,delta_V3] = aproximacoes_fast(-kg,-kh);
+[Vul_g_pt,Vul_h_pt,Vlu_g_pt,Vlu_h_pt,Vll_g_pt,Vll_h_pt,Vuu_g_pt,Vuu_h_pt,V1_g_pt,V1_h_pt,V2_g_pt,V2_h_pt,V3_g_pt,V3_h_pt,delta_V1_pt,delta_V2_pt,delta_V3_pt,cont_1_pt,Va_1_pt,Vb_1_pt,Vc_1_pt,cont_2_pt,Va_2_pt,Vb_2_pt,Vc_2_pt,cont_3_pt,Va_3_pt,Vb_3_pt,Vc_3_pt] = aproximacoes_fast(-kg,-kh,nivel);
 scatter(-kg,-kh,'filled','green')
-scatter(Vul_g,Vul_h,'filled','blue')
-text(Vul_g,Vul_h,"Vul",'FontSize',9)
-scatter(Vlu_g,Vlu_h,'filled','blue')
-text(Vlu_g,Vlu_h,"Vlu",'FontSize',9)
-scatter(Vll_g,Vll_h,'filled','blue')
-text(Vll_g,Vll_h,"Vll",'FontSize',9)
-scatter(Vuu_g,Vuu_h,'filled','blue')
-text(Vuu_g,Vuu_h,"Vuu",'FontSize',9)
-text((Vul_g + Vll_g)/2,Vll_h+1,"3quad",'FontSize',9)
-scatter(V1_g,V1_h, 10,'filled','red')
-scatter(V2_g,V2_h, 10,'filled','red')
-scatter(V3_g,V3_h, 10,'filled','red')
-text(V1_g,V1_h-0.2,num2str(delta_V1),'FontSize',9)
-text(V2_g,V2_h-0.2,num2str(delta_V2),'FontSize',9)
-text(V3_g,V3_h-0.2,num2str(delta_V3),'FontSize',9)
+scatter(Vul_g_pt,Vul_h_pt,'filled','blue')
+text(Vul_g_pt,Vul_h_pt,"Vul",'FontSize',9)
+scatter(Vlu_g_pt,Vlu_h_pt,'filled','blue')
+text(Vlu_g_pt,Vlu_h_pt,"Vlu",'FontSize',9)
+scatter(Vll_g_pt,Vll_h_pt,'filled','blue')
+text(Vll_g_pt,Vll_h_pt,"Vll",'FontSize',9)
+scatter(Vuu_g_pt,Vuu_h_pt,'filled','blue')
+text(Vuu_g_pt,Vuu_h_pt,"Vuu",'FontSize',9)
+text((Vul_g_pt + Vll_g_pt)/2,Vll_h_pt+1,"3quad",'FontSize',9)
+scatter(V1_g_pt,V1_h_pt, 10,'filled','red')
+scatter(V2_g_pt,V2_h_pt, 10,'filled','red')
+scatter(V3_g_pt,V3_h_pt, 10,'filled','red')
+text(V1_g_pt,V1_h_pt-0.2,"D=" + num2str(delta_V1_pt),'FontSize',9)
+text(V2_g_pt,V2_h_pt-0.2,"D=" + num2str(delta_V2_pt),'FontSize',9)
+text(V3_g_pt,V3_h_pt-0.2,"D=" + num2str(delta_V3_pt),'FontSize',9)
+% text(V1_g_pt,V1_h_pt-0.4,num2str(cont_1_pt),'FontSize',9)
+% text(V2_g_pt,V2_h_pt-0.4,num2str(cont_2_pt),'FontSize',9)
+% text(V3_g_pt,V3_h_pt-0.4,num2str(cont_3_pt),'FontSize',9)
+contador_pt = -0.4;
+for k=1:cont_1_pt
+    contador_pt=contador_pt+0.2;
+    junta_pt = append(int2str(Va_1_pt(k)-3),int2str(Vb_1_pt(k)-3),int2str(Vc_1_pt(k)-3));
+    text(V1_g_pt,V1_h_pt-0.6-contador_pt,"V1: ("+junta_pt+")",'FontSize',9)
+end
+contador_pt = -0.4;
+for k=1:cont_2_pt
+    contador_pt=contador_pt+0.2;
+    junta_pt = append(int2str(Va_2_pt(k)-3),int2str(Vb_2_pt(k)-3),int2str(Vc_2_pt(k)-3));
+    text(V2_g_pt,V2_h_pt-0.6-contador_pt,"V2: ("+junta_pt+")",'FontSize',9)
+end
+contador_pt = -0.4;
+for k=1:cont_3_pt
+    contador_pt=contador_pt+0.2;
+    junta_pt = append(int2str(Va_3_pt(k)-3),int2str(Vb_3_pt(k)-3),int2str(Vc_3_pt(k)-3));
+    text(V3_g_pt,V3_h_pt-0.6-contador_pt,"V3: ("+junta_pt+")",'FontSize',9)
+end
 
 %QUARTO QUADRANTE
-[Vul_g,Vul_h,Vlu_g,Vlu_h,Vll_g,Vll_h,Vuu_g,Vuu_h,V1_g,V1_h,V2_g,V2_h,V3_g,V3_h,delta_V1,delta_V2,delta_V3] = aproximacoes_fast(kg,-kh);
+[Vul_g_pt,Vul_h_pt,Vlu_g_pt,Vlu_h_pt,Vll_g_pt,Vll_h_pt,Vuu_g_pt,Vuu_h_pt,V1_g_pt,V1_h_pt,V2_g_pt,V2_h_pt,V3_g_pt,V3_h_pt,delta_V1_pt,delta_V2_pt,delta_V3_pt,cont_1_pt,Va_1_pt,Vb_1_pt,Vc_1_pt,cont_2_pt,Va_2_pt,Vb_2_pt,Vc_2_pt,cont_3_pt,Va_3_pt,Vb_3_pt,Vc_3_pt] = aproximacoes_fast(kg,-kh,nivel);
 scatter(kg,-kh,'filled','green')
-scatter(Vul_g,Vul_h,'filled','blue')
-text(Vul_g,Vul_h,"Vul",'FontSize',9)
-scatter(Vlu_g,Vlu_h,'filled','blue')
-text(Vlu_g,Vlu_h,"Vlu",'FontSize',9)
-scatter(Vll_g,Vll_h,'filled','blue')
-text(Vll_g,Vll_h,"Vll",'FontSize',9)
-scatter(Vuu_g,Vuu_h,'filled','blue')
-text(Vuu_g,Vuu_h,"Vuu",'FontSize',9)
-text((Vul_g + Vll_g)/2,Vll_h+1,"4quad",'FontSize',9)
-scatter(V1_g,V1_h, 10,'filled','red')
-scatter(V2_g,V2_h, 10,'filled','red')
-scatter(V3_g,V3_h, 10,'filled','red')
-text(V1_g,V1_h-0.2,num2str(delta_V1),'FontSize',9)
-text(V2_g,V2_h-0.2,num2str(delta_V2),'FontSize',9)
-text(V3_g,V3_h-0.2,num2str(delta_V3),'FontSize',9)
+scatter(Vul_g_pt,Vul_h_pt,'filled','blue')
+text(Vul_g_pt,Vul_h_pt,"Vul",'FontSize',9)
+scatter(Vlu_g_pt,Vlu_h_pt,'filled','blue')
+text(Vlu_g_pt,Vlu_h_pt,"Vlu",'FontSize',9)
+scatter(Vll_g_pt,Vll_h_pt,'filled','blue')
+text(Vll_g_pt,Vll_h_pt,"Vll",'FontSize',9)
+scatter(Vuu_g_pt,Vuu_h_pt,'filled','blue')
+text(Vuu_g_pt,Vuu_h_pt,"Vuu",'FontSize',9)
+text((Vul_g_pt + Vll_g_pt)/2,Vll_h_pt+1,"4quad",'FontSize',9)
+scatter(V1_g_pt,V1_h_pt, 10,'filled','red')
+scatter(V2_g_pt,V2_h_pt, 10,'filled','red')
+scatter(V3_g_pt,V3_h_pt, 10,'filled','red')
+text(V1_g_pt,V1_h_pt-0.2,"D=" + num2str(delta_V1_pt),'FontSize',9)
+text(V2_g_pt,V2_h_pt-0.2,"D=" + num2str(delta_V2_pt),'FontSize',9)
+text(V3_g_pt,V3_h_pt-0.2,"D=" + num2str(delta_V3_pt),'FontSize',9)
+% text(V1_g_pt,V1_h_pt-0.4,num2str(cont_1_pt),'FontSize',9)
+% text(V2_g_pt,V2_h_pt-0.4,num2str(cont_2_pt),'FontSize',9)
+% text(V3_g_pt,V3_h_pt-0.4,num2str(cont_3_pt),'FontSize',9)
+contador_pt = -0.4;
+for k=1:cont_1_pt
+    contador_pt=contador_pt+0.2;
+    junta_pt = append(int2str(Va_1_pt(k)-3),int2str(Vb_1_pt(k)-3),int2str(Vc_1_pt(k)-3));
+    text(V1_g_pt,V1_h_pt-0.6-contador_pt,"V1: ("+junta_pt+")",'FontSize',9)
+end
+contador_pt = -0.4;
+for k=1:cont_2_pt
+    contador_pt=contador_pt+0.2;
+    junta_pt = append(int2str(Va_2_pt(k)-3),int2str(Vb_2_pt(k)-3),int2str(Vc_2_pt(k)-3));
+    text(V2_g_pt,V2_h_pt-0.6-contador_pt,"V2: ("+junta_pt+")",'FontSize',9)
+end
+contador_pt = -0.4;
+for k=1:cont_3_pt
+    contador_pt=contador_pt+0.2;
+    junta_pt = append(int2str(Va_3_pt(k)-3),int2str(Vb_3_pt(k)-3),int2str(Vc_3_pt(k)-3));
+    text(V3_g_pt,V3_h_pt-0.6-contador_pt,"V3: ("+junta_pt+")",'FontSize',9)
+end
+scatter(dados{8}(:,1),dados{9}(:,1))
+% xlim([-3.5, 3.5])
+% ylim([-3.5, 3.5])
 hold off
 grid;
-
-
 
 
 
