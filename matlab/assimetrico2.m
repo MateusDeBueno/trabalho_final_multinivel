@@ -274,6 +274,8 @@ cont_1 = zeros(1,n_pontos);
 cont_2 = zeros(1,n_pontos);
 cont_3 = zeros(1,n_pontos);
 
+
+
 for k=1:length(time)
     VA(k) = Vref*sin(time(k)*2*pi*f_rede);
     VB(k) = Vref*sin(time(k)*2*pi*f_rede-2*pi*f_rede/3);
